@@ -14,7 +14,7 @@ public class Conector {
 
 		String usuario = "root";
 
-		String senha = "mysql";
+		String senha = "root";
 
 		String driver = "com.mysql.cj.jdbc.Driver";
 
@@ -29,7 +29,7 @@ public class Conector {
 		}
 
 	}
-		
+
 	public void listaClientes() {
 
 		try {
@@ -44,11 +44,11 @@ public class Conector {
 				String meuEndereco = resultset.getString("endereco");
 				String meuTelefone = resultset.getString("telefone");
 
-				System.out.println("id " + meuID);
-				System.out.println("nome " + meuNome);
-				System.out.println("endereco " + meuEndereco);
-				System.out.println("telefone " + meuTelefone);
-
+				System.out.println("Id: " + meuID);
+				System.out.println("Nome: " + meuNome);
+				System.out.println("Endereco: " + meuEndereco);
+				System.out.println("Telefone: " + meuTelefone);
+				System.out.println();
 			}
 
 		} catch (Exception e) {
@@ -61,9 +61,8 @@ public class Conector {
 		try {
 
 			String query = "insert into cliente() values(null,'" + nome + "','" + endereco + "','" + telefone + "');";
-
-			System.out.println("Cliente cadastrado com sucesso!");
 			this.statement.executeUpdate(query);
+			System.out.println("Cliente cadastrado com sucesso!");
 		} catch (Exception e) {
 			System.out.println("Erro" + e.getMessage());
 		}
@@ -74,8 +73,8 @@ public class Conector {
 		try {
 
 			String query = "update cliente set nome='" + nome + "'where cliente_id=" + id + ";";
-			System.out.println("Nome alterado com sucesso!");
 			this.statement.executeUpdate(query);
+			System.out.println("Nome alterado com sucesso!");
 		} catch (Exception e) {
 			System.out.println("Erro: " + e.getMessage());
 		}
@@ -86,8 +85,8 @@ public class Conector {
 		try {
 
 			String query = "update cliente set endereco='" + endereco + "'where cliente_id=" + id + ";";
-			System.out.println("Endereco alterado com sucesso!");
 			this.statement.executeUpdate(query);
+			System.out.println("Endereco alterado com sucesso!");
 		} catch (Exception e) {
 			System.out.println("Erro: " + e.getMessage());
 		}
@@ -98,8 +97,8 @@ public class Conector {
 		try {
 
 			String query = "update cliente set telefone='" + telefone + "'where cliente_id=" + id + ";";
-			System.out.println("Telefone alterado com sucesso!");
 			this.statement.executeUpdate(query);
+			System.out.println("Telefone alterado com sucesso!");
 		} catch (Exception e) {
 			System.out.println("Erro: " + e.getMessage());
 		}
@@ -109,11 +108,65 @@ public class Conector {
 
 		try {
 			String query = "delete from cliente where cliente_id=" + id + ";";
-			System.out.println("Cliente deletado com sucesso!");
 			this.statement.executeUpdate(query);
+			System.out.println("Cliente deletado com sucesso!");
 		} catch (Exception e) {
 			System.out.println("Erro: " + e.getMessage());
 		}
 	}
 
+	public void inserirProduto(String nome, Double valor, String flagTipo, Boolean flagGenerico, int qtd) {
+		try {
+
+			String query = "insert into produto() values(null,'" + nome + "'," + valor + ",'" + flagTipo + "',"
+					+ flagGenerico + "," + qtd + ");";
+
+			this.statement.executeUpdate(query);
+			System.out.println("Produto cadastrado com sucesso!");
+		} catch (Exception e) {
+			System.out.println("Erro" + e.getMessage());
+		}
+	}
+
+	public void deletaProduto(int id) {
+
+		try {
+			String query = "delete from produto where produto_id=" + id + ";";
+			this.statement.executeUpdate(query);
+			System.out.println("Cliente deletado com sucesso!");
+		} catch (Exception e) {
+			System.out.println("Erro: " + e.getMessage());
+		}
+	}
+
+	public void listaProdutos() {
+
+		try {
+
+			String query = "Select * from produto";
+			this.resultset = this.statement.executeQuery(query);
+			this.statement = this.connection.createStatement();
+
+			while (this.resultset.next()) {
+				String meuID = resultset.getString("produto_id");
+				String meuNome = resultset.getString("nome");
+				String meuValor = resultset.getString("valor");
+				String meuFlagTipo = resultset.getString("flag_tipo");
+				String meuFlagGenerico = resultset.getString("flag_generico");
+				String meuQtd = resultset.getString("qtd_disponivel");
+
+				System.out.println("Id: " + meuID);
+				System.out.println("Nome: " + meuNome);
+				System.out.println("Valor: " + meuValor);
+				System.out.println("Tipo: " + meuFlagTipo);
+				System.out.println("Generico: " + meuFlagGenerico);
+				System.out.println("Quantidade: " + meuQtd);
+				System.out.println();
+			}
+
+		} catch (Exception e) {
+			System.out.println("erro" + e.getMessage());
+
+		}
+	}
 }
