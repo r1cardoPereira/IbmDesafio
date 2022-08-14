@@ -1,21 +1,21 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-
+import java.sql.SQLException;
 
 public class Conector {
 
 	private Connection connection = null;
-	private java.sql.Statement statement ;
+	private java.sql.Statement statement;
 	private ResultSet resultset = null;
 
 	public void conectar() {
 
-		String servidor = "jdbc:mysql://localhost/ibm_g3";
+		String servidor = "jdbc:mysql://localhost/desafio";
 
 		String usuario = "root";
 
-		String senha = "";
+		String senha = "root";
 
 		String driver = "com.mysql.cj.jdbc.Driver";
 
@@ -171,7 +171,7 @@ public class Conector {
 		}
 	}
 
-	public void editarValorProduto (int id, String valor) {
+	public void editarValorProduto(int id, String valor) {
 
 		try {
 
@@ -182,7 +182,8 @@ public class Conector {
 			System.out.println("Erro: " + e.getMessage());
 		}
 	}
-	public void editarTipoProduto (int id, String meuFlagTipo) {
+
+	public void editarTipoProduto(int id, String meuFlagTipo) {
 
 		try {
 
@@ -193,7 +194,8 @@ public class Conector {
 			System.out.println("Erro: " + e.getMessage());
 		}
 	}
-	public void editarGenericoProduto (int id, String meuFlagGenerico) {
+
+	public void editarGenericoProduto(int id, String meuFlagGenerico) {
 
 		try {
 
@@ -204,7 +206,8 @@ public class Conector {
 			System.out.println("Erro: " + e.getMessage());
 		}
 	}
-	public void editarQuantidadeProduto (int id, String meuQtd) {
+
+	public void editarQuantidadeProduto(int id, String meuQtd) {
 
 		try {
 
@@ -215,6 +218,32 @@ public class Conector {
 			System.out.println("Erro: " + e.getMessage());
 		}
 	}
-	
 
+	public void inserirVenda(int clienteId, int produtoId, int qtdVendida) throws Exception {
+		float valorProduto = buscarValor(produtoId);
+		if (valorProduto != -1) {
+			float valorTotal = qtdVendida * buscarValor(produtoId);
+			String query = "insert into venda() values(null," + clienteId + "," + produtoId + "," + qtdVendida + ","
+					+ valorTotal + ");";
+			this.statement.executeUpdate(query);
+			System.out.println("Venda feita com sucesso!");
+		} else {
+			System.out.println("O produto nao existe");
+		}
+
+	}
+
+	public float buscarValor(int produtoId) throws Exception {
+
+		String queryProdutoValor = "select valor from produto where produto_id=" + produtoId + ";";
+		this.resultset = this.statement.executeQuery(queryProdutoValor);
+		this.statement = this.connection.createStatement();
+
+		if (resultset.next()) {
+			return Float.parseFloat(resultset.getString("valor"));
+		} else {
+			return -1;
+		}
+
+	}
 }

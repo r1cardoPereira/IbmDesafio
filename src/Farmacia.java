@@ -1,12 +1,12 @@
 
 public class Farmacia {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		Conector conector = new Conector();
 		conector.conectar();
 
-		 conector.inserirCliente("Ricardo", "Rua Zero", "12345678909");
+		// conector.inserirCliente("Ricardo", "Rua Zero", "12345678909");
 		// conector.deletaCliente(1);
 		// conector.listaClientes();
 		// conector.editarNomeCliente(2, "Rafael");
@@ -14,6 +14,7 @@ public class Farmacia {
 		// conector.inserirProduto("Abacavir", 20.5, "n sei", true, 10);
 		// conector.deletaProduto(4);
 		// conector.listaProdutos();
+		conector.inserirVenda(1, 3, 3);
 	}
 
 }
