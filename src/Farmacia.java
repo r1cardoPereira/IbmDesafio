@@ -6,7 +6,7 @@ public class Farmacia {
 		Conector conector = new Conector();
 		conector.conectar();
 
-		// conector.inserirCliente("Ricardo", "Rua Zero", "12345678909");
+		 conector.inserirCliente("Ricardo", "Rua Zero", "12345678909");
 		// conector.deletaCliente(1);
 		// conector.listaClientes();
 		// conector.editarNomeCliente(2, "Rafael");

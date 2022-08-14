@@ -2,19 +2,20 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 
+
 public class Conector {
 
 	private Connection connection = null;
-	private java.sql.Statement statement = null;
+	private java.sql.Statement statement ;
 	private ResultSet resultset = null;
 
 	public void conectar() {
 
-		String servidor = "jdbc:mysql://localhost/desafio";
+		String servidor = "jdbc:mysql://localhost/ibm_g3";
 
 		String usuario = "root";
 
-		String senha = "root";
+		String senha = "";
 
 		String driver = "com.mysql.cj.jdbc.Driver";
 
@@ -169,4 +170,51 @@ public class Conector {
 
 		}
 	}
+
+	public void editarValorProduto (int id, String valor) {
+
+		try {
+
+			String query = "update produto set valor='" + valor + "'where produto_id=" + id + ";";
+			this.statement.executeUpdate(query);
+			System.out.println("Valor do produto alterado!");
+		} catch (Exception e) {
+			System.out.println("Erro: " + e.getMessage());
+		}
+	}
+	public void editarTipoProduto (int id, String meuFlagTipo) {
+
+		try {
+
+			String query = "update produto set meuFlagTipo='" + meuFlagTipo + "'where produto_id=" + id + ";";
+			this.statement.executeUpdate(query);
+			System.out.println("Tipo do produto alterado!");
+		} catch (Exception e) {
+			System.out.println("Erro: " + e.getMessage());
+		}
+	}
+	public void editarGenericoProduto (int id, String meuFlagGenerico) {
+
+		try {
+
+			String query = "update produto set meuFlagGenerico='" + meuFlagGenerico + "'where produto_id=" + id + ";";
+			this.statement.executeUpdate(query);
+			System.out.println("Tipo Generico do produto alterado!");
+		} catch (Exception e) {
+			System.out.println("Erro: " + e.getMessage());
+		}
+	}
+	public void editarQuantidadeProduto (int id, String meuQtd) {
+
+		try {
+
+			String query = "update produto set meuQtd='" + meuQtd + "'where produto_id=" + id + ";";
+			this.statement.executeUpdate(query);
+			System.out.println("Quantidade do produto alterado!");
+		} catch (Exception e) {
+			System.out.println("Erro: " + e.getMessage());
+		}
+	}
+	
+
 }
