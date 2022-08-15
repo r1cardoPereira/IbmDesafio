@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
 import javax.swing.JDesktopPane;
 import javax.swing.JRadioButton;
+import javax.swing.JLayeredPane;
 
 public class FarmaciaUi extends JFrame {
 	private final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -49,6 +50,7 @@ public class FarmaciaUi extends JFrame {
 	 * Create the frame.
 	 */
 	public FarmaciaUi() {
+		setTitle("Desafio IBM by Gama Academy T1-G3");
 		conector.conectar();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 664, 394);
@@ -98,6 +100,16 @@ public class FarmaciaUi extends JFrame {
 		});
 		btnNewButton.setBounds(47, 277, 105, 23);
 		panelClientes.add(btnNewButton);
+		
+		JButton btnNewButton_2 = new JButton("Listar");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				conector.listaClientes();
+			}
+		});
+		btnNewButton_2.setBounds(178, 277, 105, 23);
+		panelClientes.add(btnNewButton_2);
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setToolTipText("Produtos");
