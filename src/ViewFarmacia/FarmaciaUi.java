@@ -18,6 +18,10 @@ import javax.swing.JTabbedPane;
 import javax.swing.JDesktopPane;
 import javax.swing.JRadioButton;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JComboBox;
+import javax.swing.JToolBar;
 
 public class FarmaciaUi extends JFrame {
 	private final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -105,7 +109,7 @@ public class FarmaciaUi extends JFrame {
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				conector.listaClientes();
+				//LOGICA
 			}
 		});
 		btnNewButton_2.setBounds(178, 277, 105, 23);
@@ -165,5 +169,8 @@ public class FarmaciaUi extends JFrame {
 		});
 		btnNewButton_1.setBounds(69, 293, 109, 23);
 		panel_1.add(btnNewButton_1);
+		
+		JPanel panel = new JPanel();
+		tabbedPane.addTab("Vendas", null, panel, null);
 	}
 }

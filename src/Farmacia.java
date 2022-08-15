@@ -9,7 +9,7 @@ public class Farmacia {
 
 		//conector.inserirCliente("Rica44rdo", "Rua Zeasro", "1234567809");
 		// conector.deletaCliente(1);
-		conector.listaClientes();
+		//conector.listaClientes();
 		// conector.editarNomeCliente(2, "Rafael");
 		// conector.editarEnderecoCliente(2, "rua sao jose");
 		// conector.inserirProduto("Abacavir", 20.5, "n sei", true, 10);
