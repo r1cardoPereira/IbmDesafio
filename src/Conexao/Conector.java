@@ -1,4 +1,5 @@
 package Conexao;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -16,7 +17,7 @@ public class Conector {
 
 		String usuario = "root";
 
-		String senha = "mysql";
+		String senha = "root";
 
 		String driver = "com.mysql.cj.jdbc.Driver";
 
@@ -86,9 +87,14 @@ public class Conector {
 
 		try {
 
-			String query = "update cliente set endereco='" + endereco + "'where cliente_id=" + id + ";";
-			this.statement.executeUpdate(query);
-			System.out.println("Endereco alterado com sucesso!");
+			if (clienteExiste(id)) {
+				String query = "update cliente set endereco='" + endereco + "'where cliente_id=" + id + ";";
+				this.statement.executeUpdate(query);
+				System.out.println("Endereco alterado com sucesso!");
+			} else {
+				System.out.println("Cliente não existe");
+			}
+
 		} catch (Exception e) {
 			System.out.println("Erro: " + e.getMessage());
 		}
@@ -97,21 +103,29 @@ public class Conector {
 	public void editarTelefoneCliente(int id, String telefone) {
 
 		try {
+			if (clienteExiste(id)) {
+				String query = "update cliente set telefone='" + telefone + "'where cliente_id=" + id + ";";
+				this.statement.executeUpdate(query);
+				System.out.println("Telefone alterado com sucesso!");
+			} else {
+				System.out.println("Cliente não existe");
+			}
 
-			String query = "update cliente set telefone='" + telefone + "'where cliente_id=" + id + ";";
-			this.statement.executeUpdate(query);
-			System.out.println("Telefone alterado com sucesso!");
 		} catch (Exception e) {
 			System.out.println("Erro: " + e.getMessage());
 		}
 	}
 
-	public void deletaCliente(int id) {
-
+	public void deletaCliente(int clienteId) {
 		try {
-			String query = "delete from cliente where cliente_id=" + id + ";";
-			this.statement.executeUpdate(query);
-			System.out.println("Cliente deletado com sucesso!");
+			if (clienteExiste(clienteId)) {
+				String query = "delete from cliente where cliente_id=" + clienteId + ";";
+				this.statement.executeUpdate(query);
+				System.out.println("Cliente deletado com sucesso!");
+			} else {
+				System.out.println("Cliente não existe");
+			}
+
 		} catch (Exception e) {
 			System.out.println("Erro: " + e.getMessage());
 		}
@@ -133,9 +147,14 @@ public class Conector {
 	public void deletaProduto(int id) {
 
 		try {
-			String query = "delete from produto where produto_id=" + id + ";";
-			this.statement.executeUpdate(query);
-			System.out.println("Cliente deletado com sucesso!");
+			if (buscarValor(id) != -1) {
+				String query = "delete from produto where produto_id=" + id + ";";
+				this.statement.executeUpdate(query);
+				System.out.println("Produto deletado com sucesso!");
+			} else {
+				System.out.println("Produto nao existe");
+			}
+
 		} catch (Exception e) {
 			System.out.println("Erro: " + e.getMessage());
 		}
@@ -175,11 +194,18 @@ public class Conector {
 	public void editarValorProduto(int id, String valor) {
 
 		try {
+			if (buscarValor(id) != -1) {
+				String query = "update produto set valor='" + valor + "'where produto_id=" + id + ";";
+				this.statement.executeUpdate(query);
+				System.out.println("Valor do produto alterado!");
+			} else {
+				System.out.println("Produto nao existe");
 
-			String query = "update produto set valor='" + valor + "'where produto_id=" + id + ";";
-			this.statement.executeUpdate(query);
-			System.out.println("Valor do produto alterado!");
-		} catch (Exception e) {
+			}
+
+		} catch (
+
+		Exception e) {
 			System.out.println("Erro: " + e.getMessage());
 		}
 	}
@@ -187,10 +213,14 @@ public class Conector {
 	public void editarTipoProduto(int id, String meuFlagTipo) {
 
 		try {
+			if (buscarValor(id) != -1) {
+				String query = "update produto set meuFlagTipo='" + meuFlagTipo + "'where produto_id=" + id + ";";
+				this.statement.executeUpdate(query);
+				System.out.println("Tipo do produto alterado!");
+			} else {
+				System.out.println("Produto nao existe");
+			}
 
-			String query = "update produto set meuFlagTipo='" + meuFlagTipo + "'where produto_id=" + id + ";";
-			this.statement.executeUpdate(query);
-			System.out.println("Tipo do produto alterado!");
 		} catch (Exception e) {
 			System.out.println("Erro: " + e.getMessage());
 		}
@@ -199,10 +229,14 @@ public class Conector {
 	public void editarGenericoProduto(int id, String meuFlagGenerico) {
 
 		try {
+			if (buscarValor(id) != -1) {
+				String query = "update produto set meuFlagGenerico='" + meuFlagGenerico + "'where produto_id=" + id + ";";
+				this.statement.executeUpdate(query);
+				System.out.println("Tipo Generico do produto alterado!");
+			} else {
+				System.out.println("Produto nao existe");
+			}
 
-			String query = "update produto set meuFlagGenerico='" + meuFlagGenerico + "'where produto_id=" + id + ";";
-			this.statement.executeUpdate(query);
-			System.out.println("Tipo Generico do produto alterado!");
 		} catch (Exception e) {
 			System.out.println("Erro: " + e.getMessage());
 		}
@@ -211,10 +245,14 @@ public class Conector {
 	public void editarQuantidadeProduto(int id, String meuQtd) {
 
 		try {
+			if (buscarValor(id) != -1) {
+				String query = "update produto set meuQtd='" + meuQtd + "'where produto_id=" + id + ";";
+				this.statement.executeUpdate(query);
+				System.out.println("Quantidade do produto alterado!");
+			} else {
+				System.out.println("Produto nao existe");
+			}
 
-			String query = "update produto set meuQtd='" + meuQtd + "'where produto_id=" + id + ";";
-			this.statement.executeUpdate(query);
-			System.out.println("Quantidade do produto alterado!");
 		} catch (Exception e) {
 			System.out.println("Erro: " + e.getMessage());
 		}
@@ -246,5 +284,13 @@ public class Conector {
 			return -1;
 		}
 
+	}
+
+	public boolean clienteExiste(int clienteId) throws SQLException {
+		String query = "select cliente_id from cliente where cliente_id =" + clienteId + ";";
+		this.resultset = this.statement.executeQuery(query);
+		this.statement = this.connection.createStatement();
+
+		return resultset.next();
 	}
 }
