@@ -40,6 +40,9 @@ public class FarmaciaUi extends JFrame {
 	private JTextField textAlterarValorProduto;
 	private JTextField textAlterarQtdProduto;
 	private JTextField textAlterarIdProduto;
+	private JTextField textIdClienteVenda;
+	private JTextField textIdProdutoVenda;
+	private JTextField textQtdVenda;
 
 	/**
 	 * Launch the application.
@@ -342,5 +345,58 @@ public class FarmaciaUi extends JFrame {
 
 		JPanel panel = new JPanel();
 		tabbedPane.addTab("Vendas", null, panel, null);
+		panel.setLayout(null);
+
+		JLabel lblNewLabel_7_2_1 = new JLabel("Campos obrigat\u00F3rios (*)");
+		lblNewLabel_7_2_1.setBounds(10, 11, 166, 14);
+		panel.add(lblNewLabel_7_2_1);
+
+		textIdClienteVenda = new JTextField();
+		textIdClienteVenda.setBounds(104, 46, 86, 20);
+		panel.add(textIdClienteVenda);
+		textIdClienteVenda.setColumns(10);
+
+		JLabel lblNewLabel_11 = new JLabel("ID do cliente: *");
+		lblNewLabel_11.setBounds(10, 49, 96, 14);
+		panel.add(lblNewLabel_11);
+
+		JLabel lblNewLabel_11_1 = new JLabel("ID do produto: *");
+		lblNewLabel_11_1.setBounds(10, 77, 96, 14);
+		panel.add(lblNewLabel_11_1);
+
+		textIdProdutoVenda = new JTextField();
+		textIdProdutoVenda.setColumns(10);
+		textIdProdutoVenda.setBounds(104, 74, 86, 20);
+		panel.add(textIdProdutoVenda);
+
+		JLabel lblNewLabel_6_2 = new JLabel("Quantidade: *");
+		lblNewLabel_6_2.setBounds(10, 119, 100, 14);
+		panel.add(lblNewLabel_6_2);
+
+		textQtdVenda = new JTextField();
+		textQtdVenda.setColumns(10);
+		textQtdVenda.setBounds(104, 116, 86, 20);
+		panel.add(textQtdVenda);
+
+		JButton btnNewButton_6 = new JButton("Gerar Venda");
+		btnNewButton_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if (!textIdClienteVenda.getText().isEmpty() && !textIdProdutoVenda.getText().isEmpty()
+						&& !textQtdVenda.getText().isEmpty()) {
+					try {
+					conector.inserirVenda(Integer.parseInt(textIdClienteVenda.getText()),Integer.parseInt(textIdProdutoVenda.getText()),Integer.parseInt(textQtdVenda.getText()));
+					JOptionPane.showMessageDialog(null, "Venda feita com sucesso! ");
+					}catch(Exception ex) {
+						System.out.println("Erro: " + ex.getMessage());
+					}
+
+				}else {
+					JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios! ");
+				}
+			}
+		});
+		btnNewButton_6.setBounds(92, 293, 109, 23);
+		panel.add(btnNewButton_6);
 	}
 }
