@@ -7,6 +7,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,6 +24,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JComboBox;
 import javax.swing.JToolBar;
+import javax.swing.JList;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JScrollPane;
 
 public class FarmaciaUi extends JFrame {
 	private final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -43,6 +48,8 @@ public class FarmaciaUi extends JFrame {
 	private JTextField textIdClienteVenda;
 	private JTextField textIdProdutoVenda;
 	private JTextField textQtdVenda;
+	private JTable table;
+	private JTable table_1;
 
 	/**
 	 * Launch the application.
@@ -125,8 +132,26 @@ public class FarmaciaUi extends JFrame {
 		JButton btnNewButton_2 = new JButton("Listar");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				DefaultTableModel tModel = new DefaultTableModel();
 
-				conector.listaClientes();
+				tModel.addColumn("ID");
+				tModel.addColumn("Nome");
+				tModel.addColumn("Endereço");
+				tModel.addColumn("Telefone");
+				try {
+					ResultSet rs = conector.listaClientes();
+					while (rs.next()) {
+
+						tModel.addRow(new Object[] { rs.getString("cliente_id"), rs.getString("nome"),
+								rs.getString("endereco"), rs.getString("telefone") });
+
+						table.setModel(tModel);
+
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnNewButton_2.setBounds(178, 277, 105, 23);
@@ -136,49 +161,62 @@ public class FarmaciaUi extends JFrame {
 		lblNewLabel_7_1.setBounds(10, 11, 166, 14);
 		panelClientes.add(lblNewLabel_7_1);
 
-		JPanel panel_2 = new JPanel();
-		tabbedPane.addTab("Alterar Cliente", null, panel_2, null);
-		panel_2.setLayout(null);
+		JList list = new JList();
+		list.setBounds(639, 126, -180, -121);
+		panelClientes.add(list);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(324, 0, 319, 327);
+		panelClientes.add(scrollPane);
+
+		table = new JTable();
+		scrollPane.setViewportView(table);
+
+		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] {}));
+
+		JPanel panelAlterarCliente = new JPanel();
+		tabbedPane.addTab("Alterar Cliente", null, panelAlterarCliente, null);
+		panelAlterarCliente.setLayout(null);
 
 		JLabel lblNewLabel_7 = new JLabel("Campos obrigatorios (*)");
 		lblNewLabel_7.setBounds(10, 11, 166, 14);
-		panel_2.add(lblNewLabel_7);
+		panelAlterarCliente.add(lblNewLabel_7);
 
 		JLabel lblNewLabel_8 = new JLabel("Nome: ");
 		lblNewLabel_8.setBounds(10, 71, 45, 24);
-		panel_2.add(lblNewLabel_8);
+		panelAlterarCliente.add(lblNewLabel_8);
 
 		textAlterarNome = new JTextField();
 		textAlterarNome.setColumns(10);
 		textAlterarNome.setBounds(35, 106, 267, 20);
-		panel_2.add(textAlterarNome);
+		panelAlterarCliente.add(textAlterarNome);
 
 		JLabel lblNewLabel_9 = new JLabel("ID: *");
 		lblNewLabel_9.setBounds(10, 46, 46, 14);
-		panel_2.add(lblNewLabel_9);
+		panelAlterarCliente.add(lblNewLabel_9);
 
 		textID = new JTextField();
 		textID.setBounds(48, 43, 62, 20);
-		panel_2.add(textID);
+		panelAlterarCliente.add(textID);
 		textID.setColumns(10);
 
 		JLabel lblNewLabel_1_1 = new JLabel("Endere\u00E7o: ");
 		lblNewLabel_1_1.setBounds(10, 146, 72, 14);
-		panel_2.add(lblNewLabel_1_1);
+		panelAlterarCliente.add(lblNewLabel_1_1);
 
 		textAlterarEndereco = new JTextField();
 		textAlterarEndereco.setColumns(10);
 		textAlterarEndereco.setBounds(35, 173, 267, 20);
-		panel_2.add(textAlterarEndereco);
+		panelAlterarCliente.add(textAlterarEndereco);
 
 		JLabel lblNewLabel_2_1 = new JLabel("Telefone: ");
 		lblNewLabel_2_1.setBounds(10, 210, 71, 14);
-		panel_2.add(lblNewLabel_2_1);
+		panelAlterarCliente.add(lblNewLabel_2_1);
 
 		textAlterarTelefone = new JTextField();
 		textAlterarTelefone.setColumns(10);
 		textAlterarTelefone.setBounds(35, 235, 152, 20);
-		panel_2.add(textAlterarTelefone);
+		panelAlterarCliente.add(textAlterarTelefone);
 
 		JButton btnNewButton_3 = new JButton("Alterar");
 		btnNewButton_3.addActionListener(new ActionListener() {
@@ -206,54 +244,78 @@ public class FarmaciaUi extends JFrame {
 			}
 		});
 		btnNewButton_3.setBounds(35, 293, 105, 23);
-		panel_2.add(btnNewButton_3);
+		panelAlterarCliente.add(btnNewButton_3);
 
-		JPanel panel_1 = new JPanel();
-		panel_1.setToolTipText("Produtos");
-		tabbedPane.addTab("Produtos", null, panel_1, null);
-		panel_1.setLayout(null);
+		JButton btnNewButton_7 = new JButton("Pesquisar");
+		btnNewButton_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 
-		JLabel lblNewLabel_3 = new JLabel("Nome  do Produto: ");
-		lblNewLabel_3.setBounds(10, 21, 118, 14);
-		panel_1.add(lblNewLabel_3);
+				try {
+					ResultSet rs = conector.buscarCliente(Integer.parseInt(textID.getText()));
+					if (rs.next()) {
+						textAlterarNome.setText(rs.getString("nome"));
+						textAlterarEndereco.setText(rs.getString("endereco"));
+						textAlterarTelefone.setText(rs.getString("telefone"));
+
+					} else {
+						JOptionPane.showMessageDialog(null, "Cliente não encontrado!");
+					}
+				} catch (NumberFormatException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnNewButton_7.setBounds(120, 42, 105, 23);
+		panelAlterarCliente.add(btnNewButton_7);
+
+		JPanel panelProdutos = new JPanel();
+		panelProdutos.setToolTipText("Produtos");
+		tabbedPane.addTab("Produtos", null, panelProdutos, null);
+		panelProdutos.setLayout(null);
+
+		JLabel lblNewLabel_3 = new JLabel("Nome  do Produto: *");
+		lblNewLabel_3.setBounds(10, 28, 118, 14);
+		panelProdutos.add(lblNewLabel_3);
 
 		textNomeProduto = new JTextField();
-		textNomeProduto.setBounds(33, 46, 341, 20);
-		panel_1.add(textNomeProduto);
+		textNomeProduto.setBounds(33, 53, 255, 20);
+		panelProdutos.add(textNomeProduto);
 		textNomeProduto.setColumns(10);
 
-		JLabel lblNewLabel_4 = new JLabel("Valor R$: ");
+		JLabel lblNewLabel_4 = new JLabel("Valor R$: *");
 		lblNewLabel_4.setBounds(10, 104, 100, 14);
-		panel_1.add(lblNewLabel_4);
+		panelProdutos.add(lblNewLabel_4);
 
 		textValorProduto = new JTextField();
 		textValorProduto.setBounds(81, 101, 86, 20);
-		panel_1.add(textValorProduto);
+		panelProdutos.add(textValorProduto);
 		textValorProduto.setColumns(10);
 
-		JLabel lblNewLabel_5 = new JLabel("Tipo: ");
+		JLabel lblNewLabel_5 = new JLabel("Tipo: *");
 		lblNewLabel_5.setBounds(10, 159, 57, 14);
-		panel_1.add(lblNewLabel_5);
+		panelProdutos.add(lblNewLabel_5);
 
 		textTipoProduto = new JTextField();
-		textTipoProduto.setBounds(20, 184, 208, 20);
-		panel_1.add(textTipoProduto);
+		textTipoProduto.setBounds(20, 184, 109, 20);
+		panelProdutos.add(textTipoProduto);
 		textTipoProduto.setColumns(10);
 
 		JRadioButton rdbtnNewRadioButton = new JRadioButton("Generico");
-		rdbtnNewRadioButton.setBounds(238, 183, 109, 23);
-		panel_1.add(rdbtnNewRadioButton);
+		rdbtnNewRadioButton.setBounds(154, 183, 118, 23);
+		panelProdutos.add(rdbtnNewRadioButton);
 
-		JLabel lblNewLabel_6 = new JLabel("Quantidade: ");
+		JLabel lblNewLabel_6 = new JLabel("Quantidade: *");
 		lblNewLabel_6.setBounds(10, 227, 100, 14);
-		panel_1.add(lblNewLabel_6);
+		panelProdutos.add(lblNewLabel_6);
 
 		textQtdProduto = new JTextField();
 		textQtdProduto.setBounds(20, 252, 86, 20);
-		panel_1.add(textQtdProduto);
+		panelProdutos.add(textQtdProduto);
 		textQtdProduto.setColumns(10);
 
 		JButton btnNewButton_1 = new JButton("Cadastrar");
+		btnNewButton_1.setBounds(69, 293, 109, 23);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// System.out.println(rdbtnNewRadioButton.isSelected());
@@ -269,43 +331,79 @@ public class FarmaciaUi extends JFrame {
 
 			}
 		});
-		btnNewButton_1.setBounds(69, 293, 109, 23);
-		panel_1.add(btnNewButton_1);
+		panelProdutos.add(btnNewButton_1);
 
 		JButton btnNewButton_4 = new JButton("Listar ");
+		btnNewButton_4.setBounds(205, 293, 109, 23);
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				conector.listaProdutos();
+
+				DefaultTableModel tModel = new DefaultTableModel();
+
+				tModel.addColumn("ID");
+				tModel.addColumn("Nome");
+				tModel.addColumn("Valor");
+				tModel.addColumn("Tipo");
+				tModel.addColumn("Generico");
+				tModel.addColumn("Quantidade");
+				try {
+					ResultSet rs = conector.listaProdutos();
+					while (rs.next()) {
+
+						tModel.addRow(new Object[] { rs.getString("produto_id"), rs.getString("nome"),
+								rs.getString("valor"), rs.getString("flag_tipo"),rs.getString("flag_generico"),rs.getString("qtd_disponivel") });
+
+						table_1.setModel(tModel);
+
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
-		btnNewButton_4.setBounds(205, 293, 109, 23);
-		panel_1.add(btnNewButton_4);
+		panelProdutos.add(btnNewButton_4);
 
-		JPanel panel_3 = new JPanel();
-		tabbedPane.addTab("Alterar Produto", null, panel_3, null);
-		panel_3.setLayout(null);
+		JLabel lblNewLabel_7_1_1 = new JLabel("Campos obrigatorios (*)");
+		lblNewLabel_7_1_1.setBounds(10, 3, 166, 14);
+		panelProdutos.add(lblNewLabel_7_1_1);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(635, 320, -291, -320);
+		panelProdutos.add(scrollPane_1);
+		
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(324, 3, 319, 324);
+		panelProdutos.add(scrollPane_2);
+		
+		table_1 = new JTable();
+		scrollPane_2.setViewportView(table_1);
+
+		JPanel panelAlterarProduto = new JPanel();
+		tabbedPane.addTab("Alterar Produto", null, panelAlterarProduto, null);
+		panelAlterarProduto.setLayout(null);
 
 		JLabel lblNewLabel_7_2 = new JLabel("Campos obrigat\u00F3rios (*)");
 		lblNewLabel_7_2.setBounds(10, 11, 166, 14);
-		panel_3.add(lblNewLabel_7_2);
+		panelAlterarProduto.add(lblNewLabel_7_2);
 
 		JLabel lblNewLabel_4_1 = new JLabel("Valor R$: ");
 		lblNewLabel_4_1.setBounds(10, 80, 100, 14);
-		panel_3.add(lblNewLabel_4_1);
+		panelAlterarProduto.add(lblNewLabel_4_1);
 
 		textAlterarValorProduto = new JTextField();
 		textAlterarValorProduto.setColumns(10);
 		textAlterarValorProduto.setBounds(73, 77, 86, 20);
-		panel_3.add(textAlterarValorProduto);
+		panelAlterarProduto.add(textAlterarValorProduto);
 
 		JLabel lblNewLabel_6_1 = new JLabel("Quantidade: ");
 		lblNewLabel_6_1.setBounds(10, 122, 100, 14);
-		panel_3.add(lblNewLabel_6_1);
+		panelAlterarProduto.add(lblNewLabel_6_1);
 
 		textAlterarQtdProduto = new JTextField();
 		textAlterarQtdProduto.setColumns(10);
 		textAlterarQtdProduto.setBounds(90, 119, 86, 20);
-		panel_3.add(textAlterarQtdProduto);
+		panelAlterarProduto.add(textAlterarQtdProduto);
 
 		JButton btnNewButton_5 = new JButton("Alterar");
 		btnNewButton_5.addActionListener(new ActionListener() {
@@ -332,71 +430,100 @@ public class FarmaciaUi extends JFrame {
 			}
 		});
 		btnNewButton_5.setBounds(247, 293, 109, 23);
-		panel_3.add(btnNewButton_5);
+		panelAlterarProduto.add(btnNewButton_5);
 
 		JLabel lblNewLabel_10 = new JLabel("ID: *");
 		lblNewLabel_10.setBounds(10, 39, 46, 14);
-		panel_3.add(lblNewLabel_10);
+		panelAlterarProduto.add(lblNewLabel_10);
 
 		textAlterarIdProduto = new JTextField();
-		textAlterarIdProduto.setBounds(48, 36, 86, 20);
-		panel_3.add(textAlterarIdProduto);
+		textAlterarIdProduto.setBounds(48, 36, 46, 20);
+		panelAlterarProduto.add(textAlterarIdProduto);
 		textAlterarIdProduto.setColumns(10);
 
-		JPanel panel = new JPanel();
-		tabbedPane.addTab("Vendas", null, panel, null);
-		panel.setLayout(null);
+		JButton btnNewButton_8 = new JButton("Pesquisar");
+		btnNewButton_8.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				try {
+					ResultSet rs = conector.buscarProduto(Integer.parseInt(textAlterarIdProduto.getText()));
+					if (rs.next()) {
+						textAlterarValorProduto.setText(rs.getString("valor"));
+						textAlterarQtdProduto.setText(rs.getString("qtd_disponivel"));
+
+					} else {
+						JOptionPane.showMessageDialog(null, "Produto não encontrado!");
+					}
+				} catch (NumberFormatException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+		});
+		btnNewButton_8.setBounds(102, 35, 100, 23);
+		panelAlterarProduto.add(btnNewButton_8);
+
+		JPanel panelVendas = new JPanel();
+		tabbedPane.addTab("Vendas", null, panelVendas, null);
+		panelVendas.setLayout(null);
 
 		JLabel lblNewLabel_7_2_1 = new JLabel("Campos obrigat\u00F3rios (*)");
 		lblNewLabel_7_2_1.setBounds(10, 11, 166, 14);
-		panel.add(lblNewLabel_7_2_1);
+		panelVendas.add(lblNewLabel_7_2_1);
 
 		textIdClienteVenda = new JTextField();
 		textIdClienteVenda.setBounds(104, 46, 86, 20);
-		panel.add(textIdClienteVenda);
+		panelVendas.add(textIdClienteVenda);
 		textIdClienteVenda.setColumns(10);
 
 		JLabel lblNewLabel_11 = new JLabel("ID do cliente: *");
 		lblNewLabel_11.setBounds(10, 49, 96, 14);
-		panel.add(lblNewLabel_11);
+		panelVendas.add(lblNewLabel_11);
 
 		JLabel lblNewLabel_11_1 = new JLabel("ID do produto: *");
 		lblNewLabel_11_1.setBounds(10, 77, 96, 14);
-		panel.add(lblNewLabel_11_1);
+		panelVendas.add(lblNewLabel_11_1);
 
 		textIdProdutoVenda = new JTextField();
 		textIdProdutoVenda.setColumns(10);
 		textIdProdutoVenda.setBounds(104, 74, 86, 20);
-		panel.add(textIdProdutoVenda);
+		panelVendas.add(textIdProdutoVenda);
 
 		JLabel lblNewLabel_6_2 = new JLabel("Quantidade: *");
 		lblNewLabel_6_2.setBounds(10, 119, 100, 14);
-		panel.add(lblNewLabel_6_2);
+		panelVendas.add(lblNewLabel_6_2);
 
 		textQtdVenda = new JTextField();
 		textQtdVenda.setColumns(10);
 		textQtdVenda.setBounds(104, 116, 86, 20);
-		panel.add(textQtdVenda);
+		panelVendas.add(textQtdVenda);
 
 		JButton btnNewButton_6 = new JButton("Gerar Venda");
 		btnNewButton_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				if (!textIdClienteVenda.getText().isEmpty() && !textIdProdutoVenda.getText().isEmpty()
 						&& !textQtdVenda.getText().isEmpty()) {
 					try {
-					conector.inserirVenda(Integer.parseInt(textIdClienteVenda.getText()),Integer.parseInt(textIdProdutoVenda.getText()),Integer.parseInt(textQtdVenda.getText()));
-					JOptionPane.showMessageDialog(null, "Venda feita com sucesso! ");
-					}catch(Exception ex) {
+						conector.inserirVenda(Integer.parseInt(textIdClienteVenda.getText()),
+								Integer.parseInt(textIdProdutoVenda.getText()),
+								Integer.parseInt(textQtdVenda.getText()));
+						JOptionPane.showMessageDialog(null, "Venda feita com sucesso! ");
+					} catch (Exception ex) {
 						System.out.println("Erro: " + ex.getMessage());
 					}
 
-				}else {
+				} else {
 					JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios! ");
 				}
 			}
 		});
 		btnNewButton_6.setBounds(92, 293, 109, 23);
-		panel.add(btnNewButton_6);
+		panelVendas.add(btnNewButton_6);
+
+		JButton btnNewButton_6_1 = new JButton("Relat\u00F3rio");
+		btnNewButton_6_1.setBounds(211, 293, 109, 23);
+		panelVendas.add(btnNewButton_6_1);
 	}
 }

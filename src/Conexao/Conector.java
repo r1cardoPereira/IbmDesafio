@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.mysql.cj.protocol.Resultset;
+
 public class Conector {
 
 	private Connection connection = null;
@@ -33,31 +35,22 @@ public class Conector {
 
 	}
 
-	public void listaClientes() {
+	public ResultSet listaClientes() throws SQLException {
 
-		try {
+	
 
 			String query = "Select * from cliente";
 			this.resultset = this.statement.executeQuery(query);
 			this.statement = this.connection.createStatement();
+			return this.resultset;
+			
+	}
 
-			while (this.resultset.next()) {
-				String meuID = resultset.getString("cliente_id");
-				String meuNome = resultset.getString("nome");
-				String meuEndereco = resultset.getString("endereco");
-				String meuTelefone = resultset.getString("telefone");
-
-				System.out.println("Id: " + meuID);
-				System.out.println("Nome: " + meuNome);
-				System.out.println("Endereco: " + meuEndereco);
-				System.out.println("Telefone: " + meuTelefone);
-				System.out.println();
-			}
-
-		} catch (Exception e) {
-			System.out.println("erro" + e.getMessage());
-
-		}
+	public ResultSet buscarCliente(int id) throws SQLException {
+		String query = "select * from cliente where cliente_id=" + id + ";";
+		this.resultset = this.statement.executeQuery(query);
+		this.statement = this.connection.createStatement();
+		return this.resultset;
 	}
 
 	public void inserirCliente(String nome, String endereco, String telefone) {
@@ -65,7 +58,7 @@ public class Conector {
 
 			String query = "insert into cliente() values(null,'" + nome + "','" + endereco + "','" + telefone + "');";
 			this.statement.executeUpdate(query);
-			//System.out.println("Cliente cadastrado com sucesso!");
+			// System.out.println("Cliente cadastrado com sucesso!");
 		} catch (Exception e) {
 			System.out.println("Erro" + e.getMessage());
 		}
@@ -160,15 +153,16 @@ public class Conector {
 		}
 	}
 
-	public void listaProdutos() {
+	public ResultSet listaProdutos() throws SQLException {
 
-		try {
+		//try {
 
 			String query = "Select * from produto";
 			this.resultset = this.statement.executeQuery(query);
 			this.statement = this.connection.createStatement();
+			return this.resultset;
 
-			while (this.resultset.next()) {
+			/*while (this.resultset.next()) {
 				String meuID = resultset.getString("produto_id");
 				String meuNome = resultset.getString("nome");
 				String meuValor = resultset.getString("valor");
@@ -188,7 +182,14 @@ public class Conector {
 		} catch (Exception e) {
 			System.out.println("erro" + e.getMessage());
 
-		}
+		}*/
+	}
+
+	public ResultSet buscarProduto(int id) throws SQLException {
+		String query = "select * from produto where produto_id=" + id + ";";
+		this.resultset = this.statement.executeQuery(query);
+		this.statement = this.connection.createStatement();
+		return this.resultset;
 	}
 
 	public void editarValorProduto(int id, double valor) {
