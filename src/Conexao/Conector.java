@@ -19,7 +19,7 @@ public class Conector {
 
 		String usuario = "root";
 
-		String senha = "mysql";
+		String senha = "root";
 
 		String driver = "com.mysql.cj.jdbc.Driver";
 
@@ -37,13 +37,11 @@ public class Conector {
 
 	public ResultSet listaClientes() throws SQLException {
 
-	
+		String query = "Select * from cliente";
+		this.resultset = this.statement.executeQuery(query);
+		this.statement = this.connection.createStatement();
+		return this.resultset;
 
-			String query = "Select * from cliente";
-			this.resultset = this.statement.executeQuery(query);
-			this.statement = this.connection.createStatement();
-			return this.resultset;
-			
 	}
 
 	public ResultSet buscarCliente(int id) throws SQLException {
@@ -58,7 +56,6 @@ public class Conector {
 
 			String query = "insert into cliente() values(null,'" + nome + "','" + endereco + "','" + telefone + "');";
 			this.statement.executeUpdate(query);
-			// System.out.println("Cliente cadastrado com sucesso!");
 		} catch (Exception e) {
 			System.out.println("Erro" + e.getMessage());
 		}
@@ -67,7 +64,6 @@ public class Conector {
 	public void editarNomeCliente(int id, String nome) {
 
 		try {
-
 			String query = "update cliente set nome='" + nome + "'where cliente_id=" + id + ";";
 			this.statement.executeUpdate(query);
 			System.out.println("Nome alterado com sucesso!");
@@ -140,6 +136,8 @@ public class Conector {
 	public void deletaProduto(int id) {
 
 		try {
+			String rule = "set FOREIGN_KEY_CHECKS = 0;";
+			this.statement.executeUpdate(rule);
 			if (buscarValor(id) != -1) {
 				String query = "delete from produto where produto_id=" + id + ";";
 				this.statement.executeUpdate(query);
@@ -155,34 +153,11 @@ public class Conector {
 
 	public ResultSet listaProdutos() throws SQLException {
 
-		//try {
+		String query = "Select * from produto";
+		this.resultset = this.statement.executeQuery(query);
+		this.statement = this.connection.createStatement();
+		return this.resultset;
 
-			String query = "Select * from produto";
-			this.resultset = this.statement.executeQuery(query);
-			this.statement = this.connection.createStatement();
-			return this.resultset;
-
-			/*while (this.resultset.next()) {
-				String meuID = resultset.getString("produto_id");
-				String meuNome = resultset.getString("nome");
-				String meuValor = resultset.getString("valor");
-				String meuFlagTipo = resultset.getString("flag_tipo");
-				String meuFlagGenerico = resultset.getString("flag_generico");
-				String meuQtd = resultset.getString("qtd_disponivel");
-
-				System.out.println("Id: " + meuID);
-				System.out.println("Nome: " + meuNome);
-				System.out.println("Valor: " + meuValor);
-				System.out.println("Tipo: " + meuFlagTipo);
-				System.out.println("Generico: " + meuFlagGenerico);
-				System.out.println("Quantidade: " + meuQtd);
-				System.out.println();
-			}
-
-		} catch (Exception e) {
-			System.out.println("erro" + e.getMessage());
-
-		}*/
 	}
 
 	public ResultSet buscarProduto(int id) throws SQLException {
@@ -262,7 +237,7 @@ public class Conector {
 
 	public void inserirVenda(int clienteId, int produtoId, int qtdVendida) throws Exception {
 		float valorProduto = buscarValor(produtoId);
-		if (valorProduto != -1) {
+		if (valorProduto != -1 && clienteExiste(clienteId)) {
 			float valorTotal = qtdVendida * buscarValor(produtoId);
 			String query = "insert into venda() values(null," + clienteId + "," + produtoId + "," + qtdVendida + ","
 					+ valorTotal + ");";
@@ -274,14 +249,32 @@ public class Conector {
 
 	}
 
+	public ResultSet listaVendas() throws SQLException {
+		String query = "Select * from venda";
+		this.resultset = this.statement.executeQuery(query);
+		this.statement = this.connection.createStatement();
+		return this.resultset;
+	}
+
+	public ResultSet listaHistorico() throws SQLException {
+		String query = "Select * from historico";
+		this.resultset = this.statement.executeQuery(query);
+		this.statement = this.connection.createStatement();
+		return this.resultset;
+	}
+
 	public float buscarValor(int produtoId) throws Exception {
 
-		String queryProdutoValor = "select valor from produto where produto_id=" + produtoId + ";";
-		this.resultset = this.statement.executeQuery(queryProdutoValor);
+		String queryProduto = "select * from produto where produto_id=" + produtoId + ";";
+		this.resultset = this.statement.executeQuery(queryProduto);
 		this.statement = this.connection.createStatement();
 
 		if (resultset.next()) {
-			return Float.parseFloat(resultset.getString("valor"));
+			if (resultset.getString("flag_generico").equals("1")) {
+				return Float.parseFloat(resultset.getString("valor")) - Float.parseFloat(resultset.getString("valor")) * 0.2F;
+			} else {
+				return Float.parseFloat(resultset.getString("valor"));
+			}
 		} else {
 			return -1;
 		}
@@ -294,5 +287,16 @@ public class Conector {
 		this.statement = this.connection.createStatement();
 
 		return resultset.next();
+	}
+
+	public int qtdDisponivel(int id) throws SQLException {
+		String query = "select qtd_disponivel from produto where produto_id =" + id + ";";
+		this.resultset = this.statement.executeQuery(query);
+		this.statement = this.connection.createStatement();
+
+		if (resultset.next()) {
+			return Integer.parseInt(resultset.getString("qtd_disponivel"));
+		}
+		return -1;
 	}
 }
