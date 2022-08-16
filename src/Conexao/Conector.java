@@ -17,7 +17,7 @@ public class Conector {
 
 		String usuario = "root";
 
-		String senha = "root";
+		String senha = "mysql";
 
 		String driver = "com.mysql.cj.jdbc.Driver";
 
@@ -65,7 +65,7 @@ public class Conector {
 
 			String query = "insert into cliente() values(null,'" + nome + "','" + endereco + "','" + telefone + "');";
 			this.statement.executeUpdate(query);
-			System.out.println("Cliente cadastrado com sucesso!");
+			//System.out.println("Cliente cadastrado com sucesso!");
 		} catch (Exception e) {
 			System.out.println("Erro" + e.getMessage());
 		}
@@ -191,7 +191,7 @@ public class Conector {
 		}
 	}
 
-	public void editarValorProduto(int id, String valor) {
+	public void editarValorProduto(int id, double valor) {
 
 		try {
 			if (buscarValor(id) != -1) {
@@ -230,7 +230,8 @@ public class Conector {
 
 		try {
 			if (buscarValor(id) != -1) {
-				String query = "update produto set meuFlagGenerico='" + meuFlagGenerico + "'where produto_id=" + id + ";";
+				String query = "update produto set meuFlagGenerico='" + meuFlagGenerico + "'where produto_id=" + id
+						+ ";";
 				this.statement.executeUpdate(query);
 				System.out.println("Tipo Generico do produto alterado!");
 			} else {
@@ -242,11 +243,11 @@ public class Conector {
 		}
 	}
 
-	public void editarQuantidadeProduto(int id, String meuQtd) {
+	public void editarQuantidadeProduto(int id, int meuQtd) {
 
 		try {
 			if (buscarValor(id) != -1) {
-				String query = "update produto set meuQtd='" + meuQtd + "'where produto_id=" + id + ";";
+				String query = "update produto set qtd_disponivel=" + meuQtd + " where produto_id=" + id + ";";
 				this.statement.executeUpdate(query);
 				System.out.println("Quantidade do produto alterado!");
 			} else {
