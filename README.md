@@ -2,13 +2,18 @@
 <p align="center"><i><br>Repositório e documentação do projeto para a criação do CRUD<br></i></p>
 
 Esse Repositório é usado como base para mostrar o funcionamento do CRUD e a criação do banco de dados. O mesmo tem o objetivo em realizar alguns métodos como: listar, incluir, excluir e alterar. Tais métodos foram desenvolvidos por participantes do projeto If Black, Then Code! da Gama Academy e da IBM.<br>
+
+## Documentação
+```sh
+https://github.com/r1cardoPereira/IbmDesafio/wiki
+```
  
-### Tecnologias
+## Tecnologias
 <p display="inline-block">
   <img width="80" src="https://cdn-icons-png.flaticon.com/512/226/226777.png"/>
 </p>
                                                                                                   
-### Ferramentas utilizadas para o desenvolvimento
+## Ferramentas utilizadas para o desenvolvimento
 <p display="inline-block">
  <img width="100" src="https://hospedagem10.com.br/wp-content/uploads/2022/04/mysql-logo-600x409.png"/>
   <img width="70" src="https://user-images.githubusercontent.com/11943860/46922575-7017cf80-cfe1-11e8-845a-0cd198fb546c.png"/>
