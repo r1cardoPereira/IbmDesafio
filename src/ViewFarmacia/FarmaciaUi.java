@@ -121,8 +121,8 @@ public class FarmaciaUi extends JFrame {
 					conector.inserirCliente(textNome.getText(), textEndereco.getText(), textTelefone.getText());
 					JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso");
 				} else {
-					// System.out.println("Todos os campos são obrigatórios");
-					JOptionPane.showMessageDialog(null, " Todos os campos são obrigatórios ");
+					// System.out.println("Todos os campos sï¿½o obrigatï¿½rios");
+					JOptionPane.showMessageDialog(null, " Todos os campos sï¿½o obrigatï¿½rios ");
 				}
 			}
 		});
@@ -136,7 +136,7 @@ public class FarmaciaUi extends JFrame {
 
 				tModel.addColumn("ID");
 				tModel.addColumn("Nome");
-				tModel.addColumn("Endereço");
+				tModel.addColumn("Endereï¿½o");
 				tModel.addColumn("Telefone");
 				try {
 					ResultSet rs = conector.listaClientes();
@@ -233,7 +233,7 @@ public class FarmaciaUi extends JFrame {
 				}
 				if (!textAlterarEndereco.getText().isEmpty()) {
 					conector.editarEnderecoCliente(Integer.parseInt(textID.getText()), textAlterarEndereco.getText());
-					JOptionPane.showMessageDialog(null, "Endereço alterado com sucesso! ");
+					JOptionPane.showMessageDialog(null, "Endereï¿½o alterado com sucesso! ");
 
 				}
 				if (!textAlterarTelefone.getText().isEmpty()) {
@@ -249,7 +249,11 @@ public class FarmaciaUi extends JFrame {
 		JButton btnNewButton_7 = new JButton("Pesquisar");
 		btnNewButton_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (textID.getText().isEmpty()) {
 
+					JOptionPane.showMessageDialog(null, "Campo de ID nao pode ficar em Branco! ");
+					return;
+				}
 				try {
 					ResultSet rs = conector.buscarCliente(Integer.parseInt(textID.getText()));
 					if (rs.next()) {
@@ -258,7 +262,7 @@ public class FarmaciaUi extends JFrame {
 						textAlterarTelefone.setText(rs.getString("telefone"));
 
 					} else {
-						JOptionPane.showMessageDialog(null, "Cliente não encontrado!");
+						JOptionPane.showMessageDialog(null, "Cliente nï¿½o encontrado!");
 					}
 				} catch (NumberFormatException | SQLException e1) {
 					// TODO Auto-generated catch block
@@ -326,7 +330,7 @@ public class FarmaciaUi extends JFrame {
 							Integer.parseInt(textQtdProduto.getText()));
 					JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso! ");
 				} else {
-					JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios! ");
+					JOptionPane.showMessageDialog(null, "Todos os campos sï¿½o obrigatï¿½rios! ");
 				}
 
 			}
@@ -351,7 +355,8 @@ public class FarmaciaUi extends JFrame {
 					while (rs.next()) {
 
 						tModel.addRow(new Object[] { rs.getString("produto_id"), rs.getString("nome"),
-								rs.getString("valor"), rs.getString("flag_tipo"),rs.getString("flag_generico"),rs.getString("qtd_disponivel") });
+								rs.getString("valor"), rs.getString("flag_tipo"), rs.getString("flag_generico"),
+								rs.getString("qtd_disponivel") });
 
 						table_1.setModel(tModel);
 
@@ -367,15 +372,15 @@ public class FarmaciaUi extends JFrame {
 		JLabel lblNewLabel_7_1_1 = new JLabel("Campos obrigatorios (*)");
 		lblNewLabel_7_1_1.setBounds(10, 3, 166, 14);
 		panelProdutos.add(lblNewLabel_7_1_1);
-		
+
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(635, 320, -291, -320);
 		panelProdutos.add(scrollPane_1);
-		
+
 		JScrollPane scrollPane_2 = new JScrollPane();
 		scrollPane_2.setBounds(324, 3, 319, 324);
 		panelProdutos.add(scrollPane_2);
-		
+
 		table_1 = new JTable();
 		scrollPane_2.setViewportView(table_1);
 
@@ -409,8 +414,8 @@ public class FarmaciaUi extends JFrame {
 		btnNewButton_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (textAlterarIdProduto.getText().isEmpty()) {
-					// System.out.println("Id do produto obrigatório!");
-					JOptionPane.showMessageDialog(null, "Id do produto obrigatório!");
+					// System.out.println("Id do produto obrigatï¿½rio!");
+					JOptionPane.showMessageDialog(null, "Id do produto obrigatï¿½rio!");
 					return;
 
 				}
@@ -444,7 +449,10 @@ public class FarmaciaUi extends JFrame {
 		JButton btnNewButton_8 = new JButton("Pesquisar");
 		btnNewButton_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				if (textAlterarIdProduto.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Id do produto obrigatï¿½rio!");
+					return;
+				}
 				try {
 					ResultSet rs = conector.buscarProduto(Integer.parseInt(textAlterarIdProduto.getText()));
 					if (rs.next()) {
@@ -452,7 +460,7 @@ public class FarmaciaUi extends JFrame {
 						textAlterarQtdProduto.setText(rs.getString("qtd_disponivel"));
 
 					} else {
-						JOptionPane.showMessageDialog(null, "Produto não encontrado!");
+						JOptionPane.showMessageDialog(null, "Produto nï¿½o encontrado!");
 					}
 				} catch (NumberFormatException | SQLException e1) {
 					// TODO Auto-generated catch block
@@ -506,6 +514,21 @@ public class FarmaciaUi extends JFrame {
 				if (!textIdClienteVenda.getText().isEmpty() && !textIdProdutoVenda.getText().isEmpty()
 						&& !textQtdVenda.getText().isEmpty()) {
 					try {
+						if (!conector.clienteExiste(Integer.parseInt(textIdClienteVenda.getText()))) {
+							JOptionPane.showMessageDialog(null, "O cliente nao existe! ");
+							return;
+						}
+
+						if (conector.buscarValor(Integer.parseInt(textIdProdutoVenda.getText())) == -1) {
+							JOptionPane.showMessageDialog(null, "O produto nao existe! ");
+							return;
+						}
+
+						if (Integer.parseInt(textQtdVenda.getText()) > conector
+								.qtdDisponivel(Integer.parseInt(textIdProdutoVenda.getText()))) {
+							JOptionPane.showMessageDialog(null, "Quantidade indisponivel! ");
+							return;
+						}
 						conector.inserirVenda(Integer.parseInt(textIdClienteVenda.getText()),
 								Integer.parseInt(textIdProdutoVenda.getText()),
 								Integer.parseInt(textQtdVenda.getText()));
@@ -515,7 +538,7 @@ public class FarmaciaUi extends JFrame {
 					}
 
 				} else {
-					JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios! ");
+					JOptionPane.showMessageDialog(null, "Todos os campos sï¿½o obrigatï¿½rios! ");
 				}
 			}
 		});
