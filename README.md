@@ -20,12 +20,160 @@ https://github.com/r1cardoPereira/IbmDesafio/wiki
 </p>
 
 
+
+
 ## Como executar?
 
 1. Clonar o repositório:
 ```sh
 git clone https://github.com/r1cardoPereira/IbmDesafio.git
 ```
+## Endpoints
+1. Conexão
+```sh
+public class Conector {
+
+	private Connection connection = null;
+	private java.sql.Statement statement;
+	private ResultSet resultset = null;
+
+	public void conectar() {
+
+		String servidor = "jdbc:mysql://localhost/desafio";
+
+		String usuario = "root";
+
+		String senha = "root";
+
+		String driver = "com.mysql.cj.jdbc.Driver";
+
+		try {
+			Class.forName(driver);
+			this.connection = DriverManager.getConnection(servidor, usuario, senha);
+			this.statement = this.connection.createStatement();
+
+		} catch (Exception e) {
+			System.out.println("Erro" + e.getMessage());
+
+		}
+
+	}
+```
+
+2. Listando Cliente
+```sh
+public ResultSet listaClientes() throws SQLException {
+
+		String query = "Select * from cliente";
+		this.resultset = this.statement.executeQuery(query);
+		this.statement = this.connection.createStatement();
+		return this.resultset;
+
+	}
+
+	public ResultSet buscarCliente(int id) throws SQLException {
+		String query = "select * from cliente where cliente_id=" + id + ";";
+		this.resultset = this.statement.executeQuery(query);
+		this.statement = this.connection.createStatement();
+		return this.resultset;
+	}
+
+```
+3. Buscando Cliente
+```sh
+public ResultSet buscarCliente(int id) throws SQLException {
+		String query = "select * from cliente where cliente_id=" + id + ";";
+		this.resultset = this.statement.executeQuery(query);
+		this.statement = this.connection.createStatement();
+		return this.resultset;
+	}
+```
+
+4. Inserindo Cliente
+``sh
+public void inserirCliente(String nome, String endereco, String telefone) {
+		try {
+
+			String query = "insert into cliente() values(null,'" + nome + "','" + endereco + "','" + telefone + "');";
+			this.statement.executeUpdate(query);
+		} catch (Exception e) {
+			System.out.println("Erro" + e.getMessage());
+		}
+	}
+```
+
+5. Editando Nome Cliente
+```sh
+public void editarNomeCliente(int id, String nome) {
+
+		try {
+			String query = "update cliente set nome='" + nome + "'where cliente_id=" + id + ";";
+			this.statement.executeUpdate(query);
+			System.out.println("Nome alterado com sucesso!");
+		} catch (Exception e) {
+			System.out.println("Erro: " + e.getMessage());
+		}
+	}
+```
+
+6. Editando Endereço Cliente
+```sh
+public void editarEnderecoCliente(int id, String endereco) {
+
+		try {
+
+			if (clienteExiste(id)) {
+				String query = "update cliente set endereco='" + endereco + "'where cliente_id=" + id + ";";
+				this.statement.executeUpdate(query);
+				System.out.println("Endereco alterado com sucesso!");
+			} else {
+				System.out.println("Cliente não existe");
+			}
+
+		} catch (Exception e) {
+			System.out.println("Erro: " + e.getMessage());
+		}
+	}
+```
+
+7. Editando Telefone Cliente
+```sh
+public void editarTelefoneCliente(int id, String telefone) {
+
+		try {
+			if (clienteExiste(id)) {
+				String query = "update cliente set telefone='" + telefone + "'where cliente_id=" + id + ";";
+				this.statement.executeUpdate(query);
+				System.out.println("Telefone alterado com sucesso!");
+			} else {
+				System.out.println("Cliente não existe");
+			}
+
+		} catch (Exception e) {
+			System.out.println("Erro: " + e.getMessage());
+		}
+	}
+```
+
+8. Excluir Cliente
+```sh
+public void deletaCliente(int clienteId) {
+		try {
+			if (clienteExiste(clienteId)) {
+				String query = "delete from cliente where cliente_id=" + clienteId + ";";
+				this.statement.executeUpdate(query);
+				System.out.println("Cliente deletado com sucesso!");
+			} else {
+				System.out.println("Cliente não existe");
+			}
+
+		} catch (Exception e) {
+			System.out.println("Erro: " + e.getMessage());
+		}
+	}
+```
+
+
 ## Banco de dados
 
 O banco de dados utilizado é um MySQL. Execute o comando a seguir para criar as tabelas:
@@ -73,4 +221,5 @@ begin
 		insert into historico() values(null,NEW.venda_id,curdate());
         update produto set qtd_disponivel = qtd_disponivel - NEW.qtd_vendida where produto_id = NEW.produto_id;
 end$$
+
 
