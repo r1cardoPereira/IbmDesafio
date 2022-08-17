@@ -50,6 +50,8 @@ public class FarmaciaUi extends JFrame {
 	private JTextField textQtdVenda;
 	private JTable table;
 	private JTable table_1;
+	private JTable table_2;
+	private JTable table_3;
 
 	/**
 	 * Launch the application.
@@ -94,7 +96,7 @@ public class FarmaciaUi extends JFrame {
 		panelClientes.add(textNome);
 		textNome.setColumns(10);
 
-		JLabel lblNewLabel_1 = new JLabel("Endere\u00E7o: *");
+		JLabel lblNewLabel_1 = new JLabel("Endereço: *");
 		lblNewLabel_1.setBounds(10, 124, 72, 14);
 		panelClientes.add(lblNewLabel_1);
 
@@ -122,7 +124,7 @@ public class FarmaciaUi extends JFrame {
 					JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso");
 				} else {
 					// System.out.println("Todos os campos sï¿½o obrigatï¿½rios");
-					JOptionPane.showMessageDialog(null, " Todos os campos sï¿½o obrigatï¿½rios ");
+					JOptionPane.showMessageDialog(null, " Todos os campos são obrigatórios ");
 				}
 			}
 		});
@@ -136,7 +138,7 @@ public class FarmaciaUi extends JFrame {
 
 				tModel.addColumn("ID");
 				tModel.addColumn("Nome");
-				tModel.addColumn("Endereï¿½o");
+				tModel.addColumn("Endereço");
 				tModel.addColumn("Telefone");
 				try {
 					ResultSet rs = conector.listaClientes();
@@ -157,7 +159,7 @@ public class FarmaciaUi extends JFrame {
 		btnNewButton_2.setBounds(178, 277, 105, 23);
 		panelClientes.add(btnNewButton_2);
 
-		JLabel lblNewLabel_7_1 = new JLabel("Campos obrigatorios (*)");
+		JLabel lblNewLabel_7_1 = new JLabel("Campos obrigatórios (*)");
 		lblNewLabel_7_1.setBounds(10, 11, 166, 14);
 		panelClientes.add(lblNewLabel_7_1);
 
@@ -178,7 +180,7 @@ public class FarmaciaUi extends JFrame {
 		tabbedPane.addTab("Alterar Cliente", null, panelAlterarCliente, null);
 		panelAlterarCliente.setLayout(null);
 
-		JLabel lblNewLabel_7 = new JLabel("Campos obrigatorios (*)");
+		JLabel lblNewLabel_7 = new JLabel("Campos obrigatórios (*)");
 		lblNewLabel_7.setBounds(10, 11, 166, 14);
 		panelAlterarCliente.add(lblNewLabel_7);
 
@@ -200,7 +202,7 @@ public class FarmaciaUi extends JFrame {
 		panelAlterarCliente.add(textID);
 		textID.setColumns(10);
 
-		JLabel lblNewLabel_1_1 = new JLabel("Endere\u00E7o: ");
+		JLabel lblNewLabel_1_1 = new JLabel("Endereço: ");
 		lblNewLabel_1_1.setBounds(10, 146, 72, 14);
 		panelAlterarCliente.add(lblNewLabel_1_1);
 
@@ -233,7 +235,7 @@ public class FarmaciaUi extends JFrame {
 				}
 				if (!textAlterarEndereco.getText().isEmpty()) {
 					conector.editarEnderecoCliente(Integer.parseInt(textID.getText()), textAlterarEndereco.getText());
-					JOptionPane.showMessageDialog(null, "Endereï¿½o alterado com sucesso! ");
+					JOptionPane.showMessageDialog(null, "Endereço alterado com sucesso! ");
 
 				}
 				if (!textAlterarTelefone.getText().isEmpty()) {
@@ -262,7 +264,7 @@ public class FarmaciaUi extends JFrame {
 						textAlterarTelefone.setText(rs.getString("telefone"));
 
 					} else {
-						JOptionPane.showMessageDialog(null, "Cliente nï¿½o encontrado!");
+						JOptionPane.showMessageDialog(null, "Cliente não encontrado!");
 					}
 				} catch (NumberFormatException | SQLException e1) {
 					// TODO Auto-generated catch block
@@ -330,7 +332,7 @@ public class FarmaciaUi extends JFrame {
 							Integer.parseInt(textQtdProduto.getText()));
 					JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso! ");
 				} else {
-					JOptionPane.showMessageDialog(null, "Todos os campos sï¿½o obrigatï¿½rios! ");
+					JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios! ");
 				}
 
 			}
@@ -369,7 +371,7 @@ public class FarmaciaUi extends JFrame {
 		});
 		panelProdutos.add(btnNewButton_4);
 
-		JLabel lblNewLabel_7_1_1 = new JLabel("Campos obrigatorios (*)");
+		JLabel lblNewLabel_7_1_1 = new JLabel("Campos obrigatórios (*)");
 		lblNewLabel_7_1_1.setBounds(10, 3, 166, 14);
 		panelProdutos.add(lblNewLabel_7_1_1);
 
@@ -388,7 +390,7 @@ public class FarmaciaUi extends JFrame {
 		tabbedPane.addTab("Alterar Produto", null, panelAlterarProduto, null);
 		panelAlterarProduto.setLayout(null);
 
-		JLabel lblNewLabel_7_2 = new JLabel("Campos obrigat\u00F3rios (*)");
+		JLabel lblNewLabel_7_2 = new JLabel("Campos obrigatórios (*)");
 		lblNewLabel_7_2.setBounds(10, 11, 166, 14);
 		panelAlterarProduto.add(lblNewLabel_7_2);
 
@@ -415,7 +417,7 @@ public class FarmaciaUi extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (textAlterarIdProduto.getText().isEmpty()) {
 					// System.out.println("Id do produto obrigatï¿½rio!");
-					JOptionPane.showMessageDialog(null, "Id do produto obrigatï¿½rio!");
+					JOptionPane.showMessageDialog(null, "Id do produto obrigatório!");
 					return;
 
 				}
@@ -450,7 +452,7 @@ public class FarmaciaUi extends JFrame {
 		btnNewButton_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (textAlterarIdProduto.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Id do produto obrigatï¿½rio!");
+					JOptionPane.showMessageDialog(null, "Id do produto obrigatório!");
 					return;
 				}
 				try {
@@ -460,7 +462,7 @@ public class FarmaciaUi extends JFrame {
 						textAlterarQtdProduto.setText(rs.getString("qtd_disponivel"));
 
 					} else {
-						JOptionPane.showMessageDialog(null, "Produto nï¿½o encontrado!");
+						JOptionPane.showMessageDialog(null, "Produto não encontrado!");
 					}
 				} catch (NumberFormatException | SQLException e1) {
 					// TODO Auto-generated catch block
@@ -472,11 +474,38 @@ public class FarmaciaUi extends JFrame {
 		btnNewButton_8.setBounds(102, 35, 100, 23);
 		panelAlterarProduto.add(btnNewButton_8);
 
+		JButton btnNewButton_10 = new JButton("Deletar");
+		btnNewButton_10.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				if (textAlterarIdProduto.getText().isEmpty()) {
+
+					JOptionPane.showMessageDialog(null, "Id do produto obrigatório!");
+					return;
+
+				}
+				try {
+					if (conector.buscarValor(Integer.parseInt(textAlterarIdProduto.getText())) != -1) {
+						conector.deletaProduto(Integer.parseInt(textAlterarIdProduto.getText()));
+						JOptionPane.showMessageDialog(null, "Deletado com sucesso! ");
+					}else {
+						JOptionPane.showMessageDialog(null, "Produto não encontrado!");
+					}
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+		});
+		btnNewButton_10.setBounds(134, 293, 109, 23);
+		panelAlterarProduto.add(btnNewButton_10);
+
 		JPanel panelVendas = new JPanel();
 		tabbedPane.addTab("Vendas", null, panelVendas, null);
 		panelVendas.setLayout(null);
 
-		JLabel lblNewLabel_7_2_1 = new JLabel("Campos obrigat\u00F3rios (*)");
+		JLabel lblNewLabel_7_2_1 = new JLabel("Campos obrigatórios (*)");
 		lblNewLabel_7_2_1.setBounds(10, 11, 166, 14);
 		panelVendas.add(lblNewLabel_7_2_1);
 
@@ -515,12 +544,12 @@ public class FarmaciaUi extends JFrame {
 						&& !textQtdVenda.getText().isEmpty()) {
 					try {
 						if (!conector.clienteExiste(Integer.parseInt(textIdClienteVenda.getText()))) {
-							JOptionPane.showMessageDialog(null, "O cliente nao existe! ");
+							JOptionPane.showMessageDialog(null, "O cliente não existe! ");
 							return;
 						}
 
 						if (conector.buscarValor(Integer.parseInt(textIdProdutoVenda.getText())) == -1) {
-							JOptionPane.showMessageDialog(null, "O produto nao existe! ");
+							JOptionPane.showMessageDialog(null, "O produto não existe! ");
 							return;
 						}
 
@@ -538,15 +567,95 @@ public class FarmaciaUi extends JFrame {
 					}
 
 				} else {
-					JOptionPane.showMessageDialog(null, "Todos os campos sï¿½o obrigatï¿½rios! ");
+					JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios! ");
 				}
 			}
 		});
-		btnNewButton_6.setBounds(92, 293, 109, 23);
+		btnNewButton_6.setBounds(10, 293, 109, 23);
 		panelVendas.add(btnNewButton_6);
 
-		JButton btnNewButton_6_1 = new JButton("Relat\u00F3rio");
-		btnNewButton_6_1.setBounds(211, 293, 109, 23);
+		JButton btnNewButton_6_1 = new JButton("Relatório");
+		btnNewButton_6_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				DefaultTableModel tModel = new DefaultTableModel();
+
+				tModel.addColumn("Venda ID");
+				tModel.addColumn("Cliente ID");
+				tModel.addColumn("Produtos ID");
+				tModel.addColumn("Quantidade");
+				tModel.addColumn("Valor Total");
+
+				try {
+					ResultSet rs = conector.listaVendas();
+					while (rs.next()) {
+
+						tModel.addRow(new Object[] { rs.getString("venda_id"), rs.getString("cliente_id"),
+								rs.getString("produto_id"), rs.getString("qtd_vendida"), rs.getString("valor_total") });
+
+						table_2.setModel(tModel);
+
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnNewButton_6_1.setBounds(139, 293, 109, 23);
 		panelVendas.add(btnNewButton_6_1);
+
+		JPanel panel = new JPanel();
+		panel.setBounds(258, 11, 375, 305);
+		panelVendas.add(panel);
+		panel.setLayout(null);
+
+		JScrollPane scrollPane_3 = new JScrollPane();
+		scrollPane_3.setBounds(0, 0, 375, 305);
+		panel.add(scrollPane_3);
+
+		table_2 = new JTable();
+		scrollPane_3.setViewportView(table_2);
+
+		JPanel panel_1 = new JPanel();
+		tabbedPane.addTab("Histórico de Vendas", null, panel_1, null);
+		panel_1.setLayout(null);
+
+		JScrollPane scrollPane_4 = new JScrollPane();
+		scrollPane_4.setBounds(371, 11, 262, 305);
+		panel_1.add(scrollPane_4);
+
+		table_3 = new JTable();
+		scrollPane_4.setViewportView(table_3);
+
+		JButton btnNewButton_9 = new JButton("Histórico");
+		btnNewButton_9.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				DefaultTableModel tModel = new DefaultTableModel();
+
+				tModel.addColumn("Histórico ID");
+				tModel.addColumn("Venda ID");
+				tModel.addColumn("Data");
+
+				try {
+					ResultSet rs = conector.listaHistorico();
+					while (rs.next()) {
+
+						tModel.addRow(new Object[] { rs.getString("historico_id"), rs.getString("venda_id"),
+								rs.getString("data") });
+
+						table_3.setModel(tModel);
+
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+		});
+		btnNewButton_9.setBounds(263, 293, 89, 23);
+		panel_1.add(btnNewButton_9);
 	}
 }

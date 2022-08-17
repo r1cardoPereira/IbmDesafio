@@ -19,7 +19,7 @@ public class Conector {
 
 		String usuario = "root";
 
-		String senha = "root";
+		String senha = "mysql";
 
 		String driver = "com.mysql.cj.jdbc.Driver";
 
