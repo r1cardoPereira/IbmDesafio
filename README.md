@@ -59,121 +59,136 @@ public class Conector {
 
 	}
 ```
-
+## Cliente
 2. Listando Cliente
 ```sh
 public ResultSet listaClientes() throws SQLException {
-
-		String query = "Select * from cliente";
-		this.resultset = this.statement.executeQuery(query);
-		this.statement = this.connection.createStatement();
-		return this.resultset;
-
-	}
-
-	public ResultSet buscarCliente(int id) throws SQLException {
-		String query = "select * from cliente where cliente_id=" + id + ";";
-		this.resultset = this.statement.executeQuery(query);
-		this.statement = this.connection.createStatement();
-		return this.resultset;
 	}
 
 ```
-3. Buscando Cliente
+2.1. Buscando Cliente
 ```sh
 public ResultSet buscarCliente(int id) throws SQLException {
-		String query = "select * from cliente where cliente_id=" + id + ";";
-		this.resultset = this.statement.executeQuery(query);
-		this.statement = this.connection.createStatement();
-		return this.resultset;
 	}
 ```
 
-4. Inserindo Cliente
-``sh
+2.2. Inserindo Cliente
+```sh
 public void inserirCliente(String nome, String endereco, String telefone) {
-		try {
-
-			String query = "insert into cliente() values(null,'" + nome + "','" + endereco + "','" + telefone + "');";
-			this.statement.executeUpdate(query);
-		} catch (Exception e) {
-			System.out.println("Erro" + e.getMessage());
-		}
 	}
 ```
 
-5. Editando Nome Cliente
+2.3. Editando Nome Cliente
 ```sh
 public void editarNomeCliente(int id, String nome) {
-
-		try {
-			String query = "update cliente set nome='" + nome + "'where cliente_id=" + id + ";";
-			this.statement.executeUpdate(query);
-			System.out.println("Nome alterado com sucesso!");
-		} catch (Exception e) {
-			System.out.println("Erro: " + e.getMessage());
-		}
 	}
 ```
 
-6. Editando Endereço Cliente
+2.4. Editando Endereço Cliente
 ```sh
 public void editarEnderecoCliente(int id, String endereco) {
-
-		try {
-
-			if (clienteExiste(id)) {
-				String query = "update cliente set endereco='" + endereco + "'where cliente_id=" + id + ";";
-				this.statement.executeUpdate(query);
-				System.out.println("Endereco alterado com sucesso!");
-			} else {
-				System.out.println("Cliente não existe");
-			}
-
-		} catch (Exception e) {
-			System.out.println("Erro: " + e.getMessage());
-		}
 	}
 ```
 
-7. Editando Telefone Cliente
+2.5. Editando Telefone Cliente
 ```sh
 public void editarTelefoneCliente(int id, String telefone) {
-
-		try {
-			if (clienteExiste(id)) {
-				String query = "update cliente set telefone='" + telefone + "'where cliente_id=" + id + ";";
-				this.statement.executeUpdate(query);
-				System.out.println("Telefone alterado com sucesso!");
-			} else {
-				System.out.println("Cliente não existe");
-			}
-
-		} catch (Exception e) {
-			System.out.println("Erro: " + e.getMessage());
-		}
 	}
 ```
 
-8. Excluir Cliente
+2.6. Excluir Cliente
 ```sh
 public void deletaCliente(int clienteId) {
-		try {
-			if (clienteExiste(clienteId)) {
-				String query = "delete from cliente where cliente_id=" + clienteId + ";";
-				this.statement.executeUpdate(query);
-				System.out.println("Cliente deletado com sucesso!");
-			} else {
-				System.out.println("Cliente não existe");
-			}
-
-		} catch (Exception e) {
-			System.out.println("Erro: " + e.getMessage());
-		}
+	}
+```
+2.7. Verificar se o cliente existe
+```sh
+public boolean clienteExiste(int clienteId) throws SQLException {
 	}
 ```
 
 
+## Produto
+
+3.. Incluir Produto
+```sh
+public void inserirProduto(String nome, Double valor, String flagTipo, Boolean flagGenerico, int qtd) {
+	}
+```
+3.1. Incluir Produto
+```sh
+public void inserirProduto(String nome, Double valor, String flagTipo, Boolean flagGenerico, int qtd) {
+	}
+```
+3.2. Excluir Produto
+```sh
+public void deletaProduto(int id) {
+	}
+```
+3.3. Listar Produto
+```sh
+public ResultSet listaProdutos() throws SQLException {
+	}
+```
+3.4. Buscar Produto
+```sh
+public ResultSet buscarProduto(int id) throws SQLException {
+	}
+```
+3.5. Editar Valor Produto
+```sh
+public void editarValorProduto(int id, double valor) {
+	}
+
+```
+
+3.6. Editar Tipo Produto
+```sh
+public void editarTipoProduto(int id, String meuFlagTipo) {
+	}
+
+```
+3.7. Editar Generico Produto
+```sh
+public void editarGenericoProduto(int id, String meuFlagGenerico) {
+	}
+
+```
+3.8. Editar Quantidade Produto
+```sh
+public void editarQuantidadeProduto(int id, int meuQtd) {
+	}
+
+```
+3.9. Buscar Valor Produto
+```sh
+public float buscarValor(int produtoId) throws Exception {
+	}
+
+```
+
+## Venda
+4. Inserir Venda
+```sh
+public void inserirVenda(int clienteId, int produtoId, int qtdVendida) throws Exception {
+	}
+
+```
+
+4.1. Listar Venda
+```sh
+public ResultSet listaVendas() throws SQLException {
+	}
+
+```
+
+## Histório
+4. Listar Histórico
+```sh
+public ResultSet listaHistorico() throws SQLException {
+     }
+
+```
 ## Banco de dados
 
 O banco de dados utilizado é um MySQL. Execute o comando a seguir para criar as tabelas:
