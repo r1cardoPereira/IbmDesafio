@@ -96,16 +96,12 @@ public void editarTelefoneCliente(int id, String telefone) {
 	}
 ```
 
-2.6. Excluir Cliente
-```sh
-public void deletaCliente(int clienteId) {
-	}
-```
-2.7. Verificar se o cliente existe
+2.6.  Verificar se o cliente existe
 ```sh
 public boolean clienteExiste(int clienteId) throws SQLException {
 	}
 ```
+
 
 
 ## Produto
